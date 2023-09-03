@@ -6,98 +6,98 @@ const bcrypt = require("bcryptjs");
 const Sequelize = require("sequelize");
 
 // Configuración de Sequelize y conexión a la base de datos
-const sequelize = new Sequelize({
-  dialect: "mysql",
-  host: config.ServerDB,
-  port: config.PortDB,
-  username: config.UserDB,
-  password: config.PasswordBD,
-  database: config.Database,
-});
+// const sequelize = new Sequelize({
+//   dialect: "mysql",
+//   host: config.ServerDB,
+//   port: config.PortDB,
+//   username: config.UserDB,
+//   password: config.PasswordBD,
+//   database: config.Database,
+// });
 
-// Definición de modelos
-const Huesped = sequelize.define(
-  "huesped",
-  {
-    nombre: Sequelize.STRING,
-    num_cedula: {
-      type: Sequelize.INTEGER,
-      unique: true,
-      primaryKey: true,
-    },
-    pais: Sequelize.STRING,
-    departamento: Sequelize.STRING,
-    ciudad: Sequelize.STRING,
-  },
-  {
-    tableName: "huesped", // Indicar el nombre correcto de la tabla
-    timestamps: false, // Deshabilitar los campos createdAt y updatedAt
-  }
-);
+// // Definición de modelos
+// const Huesped = sequelize.define(
+//   "huesped",
+//   {
+//     nombre: Sequelize.STRING,
+//     num_cedula: {
+//       type: Sequelize.INTEGER,
+//       unique: true,
+//       primaryKey: true,
+//     },
+//     pais: Sequelize.STRING,
+//     departamento: Sequelize.STRING,
+//     ciudad: Sequelize.STRING,
+//   },
+//   {
+//     tableName: "huesped", // Indicar el nombre correcto de la tabla
+//     timestamps: false, // Deshabilitar los campos createdAt y updatedAt
+//   }
+// );
 
-const Validacion = sequelize.define(
-  "validacion",
-  {
-    num_cedula: {
-      type: Sequelize.INTEGER,
-      primaryKey: true,
-      autoIncrement: false,
-      unique: true,
-    },
-    pass: Sequelize.STRING,
-  },
-  {
-    tableName: "validacion", // Indicar el nombre correcto de la tabla
-    timestamps: false,
-    createdAt: false, // Deshabilitar campo createdAt
-    updatedAt: false,
-  }
-);
+// const Validacion = sequelize.define(
+//   "validacion",
+//   {
+//     num_cedula: {
+//       type: Sequelize.INTEGER,
+//       primaryKey: true,
+//       autoIncrement: false,
+//       unique: true,
+//     },
+//     pass: Sequelize.STRING,
+//   },
+//   {
+//     tableName: "validacion", // Indicar el nombre correcto de la tabla
+//     timestamps: false,
+//     createdAt: false, // Deshabilitar campo createdAt
+//     updatedAt: false,
+//   }
+// );
 
-// Relaciones entre modelos
-Huesped.hasOne(Validacion, {
-  foreignKey: "num_cedula",
-  sourceKey: "num_cedula",
-});
+// // Relaciones entre modelos
+// Huesped.hasOne(Validacion, {
+//   foreignKey: "num_cedula",
+//   sourceKey: "num_cedula",
+// });
 
-// Función para crear un usuario
-async function crearUsuarioU(
-  nombre,
-  num_cedula,
-  pais,
-  departamento,
-  ciudad,
-  pass
-) {
-  try {
-    const hash = await bcrypt.hash(pass, 10);
+// // Función para crear un usuario
+// async function crearUsuarioU(
+//   nombre,
+//   num_cedula,
+//   pais,
+//   departamento,
+//   ciudad,
+//   pass
+// ) {
+//   try {
+//     const hash = await bcrypt.hash(pass, 10);
 
-    //Crear un registro en la tabla Huesped
-    const huesped = await Huesped.create({
-      nombre,
-      num_cedula,
-      pais,
-      departamento,
-      ciudad,
-    });
+//     //Crear un registro en la tabla Huesped
+//     const huesped = await Huesped.create({
+//       nombre,
+//       num_cedula,
+//       pais,
+//       departamento,
+//       ciudad,
+//     });
 
-    // Crear un registro en la tabla Validacion
-    const validacion = await Validacion.create({
-      num_cedula,
-      pass: hash,
-    });
+//     // Crear un registro en la tabla Validacion
+//     const validacion = await Validacion.create({
+//       num_cedula,
+//       pass: hash,
+//     });
 
-    return { success: true, message: "Usuario creado correctamente" };
-  } catch (error) {
-    if (error.name === "SequelizeUniqueConstraintError") {
-      return {
-        success: false,
-        message:
-          "Ha habido un error en la creacion del usuario, el usuario ya existe",
-      };
-    }
-  }
-}
+//     return { success: true, message: "Usuario creado correctamente" };
+//   } catch (error) {
+//     if (error.name === "SequelizeUniqueConstraintError") {
+//       return {
+//         success: false,
+//         message:
+//           "Ha habido un error en la creacion del usuario, el usuario ya existe",
+//       };
+//     }
+//   }
+// }
 
 async function crearUsuarioU(
   nombre,
