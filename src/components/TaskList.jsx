@@ -74,7 +74,7 @@ export default function Tasklist() {
       if (/^\d{4}-\d{2}-\d{2}$/.test(updatedValue)) {
         loadTasks();
       }
-      navigate('/');      
+      /* navigate('/');   */    
     })
     .catch((error) => {
       console.error('Error updating task:', error);
@@ -113,7 +113,7 @@ export default function Tasklist() {
                     defaultValue={fecha.descripcion}
                     autoComplete="off"
                     multiline={true}
-                    onChange={(e) => setChange(fecha.id, fecha.ide, fecha.origen, e.target.value, 'descripcion')}
+                    onBlur={(e) => setChange(fecha.id, fecha.ide, fecha.origen, e.target.value, 'descripcion')}
                     inputProps={{ min: 0, style: { textAlign: 'center', color: 'rgb(223, 238, 235)', fontSize: '0.8rem' } }}
                     variant="standard"
                   />
@@ -121,7 +121,7 @@ export default function Tasklist() {
                   <TdCenter><StyledTextField
                     defaultValue={fecha.monto}
                     autoComplete="off"
-                    onChange={(e) => setChange(fecha.id, fecha.ide, fecha.origen, e.target.value, 'monto')}
+                    onBlur={(e) => setChange(fecha.id, fecha.ide, fecha.origen, e.target.value, 'monto')}
                     inputProps={{ min: 0, style: { textAlign: 'center', color: 'rgb(223, 238, 235)', fontSize: '0.8rem' } }}
                     variant="standard"
                     itemType='number'
@@ -130,7 +130,7 @@ export default function Tasklist() {
                     type="date"
                     defaultValue={fecha.fecha}
                     autoComplete="off"
-                    onChange={(e) => setChange(fecha.id, fecha.ide, fecha.origen, e.target.value, 'fecha')}
+                    onBlur={(e) => setChange(fecha.id, fecha.ide, fecha.origen, e.target.value, 'fecha')}
                     inputProps={{ min: 0, style: { textAlign: 'center', color: 'rgb(223, 238, 235)', fontSize: '0.8rem' } }}
                     variant="standard"
                   /></TdCenter>
